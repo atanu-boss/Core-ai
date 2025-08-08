@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Media Generator | Create AI Art & Videos</title>
+    <style>
+        /* [Previous CSS styles remain exactly the same] */
+    </style>
+</head>
+<body>
+    <!-- [Previous HTML structure remains exactly the same] -->
+
+    <script>
+        // Debugging helper
+        console.log("Script loaded successfully");
+        
+        // ===== Fixed Image Generation =====
+        const imageGenerateBtn = document.getElementById('generateImageBtn');
+        
+        if (!imageGenerateBtn) {
+            console.error("Generate Image button not found!");
+        } else {
+            console.log("Image generate button found");
+            imageGenerateBtn.addEventListener('click', async function() {
+                console.log("Image generate button clicked");
+                
+                const prompt = document.getElementById('imagePrompt').value;
+                const style = document.getElementById('imageStyle').value;
+                
+                if (!prompt) {
+                    alert('Please enter a description for your image');
+                    return;
+                }
+                
+                console.log(`Generating image with prompt: ${prompt}, style: ${style}`);
+                
+                // Show loading state
+                document.getElementById('generateImageBtn').disabled = true;
+                document.getElementById('imageLoading').style.display = 'block';
+                document.getElementById('imagePreview').style.display = 'none';
+                document.getElementById('imageResults').style.display = 'none';
+                
+                try {
+                    // Simulate API call delay (3 seconds)
+                    console.log("Starting image generation...");
+                    await new Promise(resolve => setTimeout(resolve, 3000));
+                    
+                    // Create a unique image URL based on prompt
+                    const randomSeed = Math.floor(Math.random() * 10000);
+                    const mockImageUrl = `https://source.unsplash.com/random/800x600/?${encodeURIComponent(prompt)}&seed=${randomSeed}`;
+                    console.log("Generated image URL:", mockImageUrl);
+                    
+                    // Set the image source
+                    const imagePreview = document.getElementById('imagePreview');
+                    imagePreview.src = mockImageUrl;
+                    imagePreview.style.display = 'block';
+                    imagePreview.onload = function() {
+                        console.log("Image loaded successfully");
+                        document.getElementById('imageResults').style.display = 'block';
+                    };
+                    
+                    // Set up download
+                    document.getElementById('downloadImageBtn').onclick = function() {
+                        const link = document.createElement('a');
+                        link.href = mockImageUrl;
+                        link.download = `ai-image-${Date.now()}.jpg`;
+                        console.log("Downloading image...");
+                        link.click();
+                    };
+                    
+                } catch (error) {
+                    console.error('Image generation error:', error);
+                    alert('Failed to generate image. Please check console for details.');
+                } finally {
+                    document.getElementById('generateImageBtn').disabled = false;
+                    document.getElementById('imageLoading').style.display = 'none';
+                    console.log("Image generation completed");
+                }
+            });
+        }
+
+        // ===== Fixed Video Generation =====
+        const videoGenerateBtn = document.getElementById('generateVideoBtn');
+        
+        if (!videoGenerateBtn) {
+            console.error("Generate Video button not found!");
+        } else {
+            console.log("Video generate button found");
+            videoGenerateBtn.addEventListener('click', async function() {
+                console.log("Video generate button clicked");
+                
+                const prompt = document.getElementById('videoPrompt').value;
+                const style = document.getElementById('videoStyle').value;
+                const length = document.getElementById('videoLength').value;
+                
+                if (!prompt) {
+                    alert('Please enter a description for your video');
+                    return;
+                }
+                
+                console.log(`Generating video with prompt: ${prompt}, style: ${style}, length: ${length}s`);
+                
+                // Show loading state
+                document.getElementById('generateVideoBtn').disabled = true;
+                document.getElementById('videoLoading').style.display = 'block';
+                document.getElementById('videoPreview').style.display = 'none';
+                document.getElementById('videoResults').style.display = 'none';
+                
+                try {
+                    // Simulate longer API call for video (5 seconds)
+                    console.log("Starting video generation...");
+                    await new Promise(resolve => setTimeout(resolve, 5000));
+                    
+                    // Sample video URL
+                    const mockVideoUrl = 'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4';
+                    console.log("Generated video URL:", mockVideoUrl);
+                    
+                    // Set the video source
+                    const videoPreview = document.getElementById('videoPreview');
+                    videoPreview.src = mockVideoUrl;
+                    videoPreview.style.display = 'block';
+                    videoPreview.onloadeddata = function() {
+                        console.log("Video loaded successfully");
+                        document.getElementById('videoResults').style.display = 'block';
+                    };
+                    
+                    // Set up download
+                    document.getElementById('downloadVideoBtn').onclick = function() {
+                        const link = document.createElement('a');
+                        link.href = mockVideoUrl;
+                        link.download = `ai-video-${Date.now()}.mp4`;
+                        console.log("Downloading video...");
+                        link.click();
+                    };
+                    
+                } catch (error) {
+                    console.error('Video generation error:', error);
+                    alert('Failed to generate video. Please check console for details.');
+                } finally {
+                    document.getElementById('generateVideoBtn').disabled = false;
+                    document.getElementById('videoLoading').style.display = 'none';
+                    console.log("Video generation completed");
+                }
+            });
+        }
+
+        // [Rest of the JavaScript code remains the same]
+    </script>
+</body>
+</html>
